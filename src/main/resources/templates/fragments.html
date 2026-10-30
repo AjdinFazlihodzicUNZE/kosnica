@@ -9,6 +9,21 @@
 <body>
 <nav th:fragment="navbar" class="navbar">
     <a th:href="@{/}" class="brand">🐝 Košnica</a>
+    <div>
+        <span th:if="${loggedIn}">
+            <a th:href="@{/dashboard}">Početna</a>
+            <a th:href="@{/files}">Moje ćelije</a>
+            <a th:href="@{/billing}">Naplata</a>
+            <a th:href="@{/usage}">Potrošnja</a>
+            <form th:action="@{/logout}" method="post" class="inline">
+                <button type="submit">Odjava</button>
+            </form>
+        </span>
+        <span th:unless="${loggedIn}">
+            <a th:href="@{/login}">Prijava</a>
+            <a th:href="@{/register}">Registracija</a>
+        </span>
+    </div>
 </nav>
 </body>
 </html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Početna')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<main class="container">
+    <h1>Zdravo, <span th:text="${user.fullName}">pčelaru</span> 🐝</h1>
+    <p>Ovdje ćeš uskoro vidjeti stanje svoje košnice.</p>
+</main>
+</body>
+</html>
