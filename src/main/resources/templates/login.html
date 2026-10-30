@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Prijava')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<main class="container">
+    <h1>Prijava</h1>
+    <form th:action="@{/login}" method="post" class="card">
+        <div class="error" th:if="${param.error}">Pogrešan email ili lozinka</div>
+        <div class="success" th:if="${param.registered}">Registracija uspješna, prijavi se</div>
+        <label>Email</label><br>
+        <input type="text" name="email">
+        <br>
+        <label>Lozinka</label><br>
+        <input type="password" name="password">
+        <br>
+        <button type="submit">Prijavi se</button>
+    </form>
+</main>
+</body>
+</html>
