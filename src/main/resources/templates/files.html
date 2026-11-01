@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Moje ćelije')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<main class="container">
+    <h1>Moje ćelije 🍯</h1>
+
+    <div class="success" th:if="${message}" th:text="${message}"></div>
+    <div class="error" th:if="${error}" th:text="${error}"></div>
+
+    <form th:action="@{/files/upload(_csrf=${_csrf.token})}" method="post" enctype="multipart/form-data" class="card">
+        <input type="file" name="file">
+        <button type="submit">Donesi med</button>
+    </form>
+
+    <table th:if="${!files.isEmpty()}">
+        <tr><th>Naziv</th><th>Veličina</th><th>Datum</th><th></th></tr>
+        <tr th:each="f : ${files}">
+            <td th:text="${f.originalName}"></td>
+            <td th:text="${#numbers.formatDecimal(f.sizeBytes / 1048576.0, 1, 2)} + ' MB'"></td>
+            <td th:text="${#temporals.format(f.uploadedAt, 'dd.MM.yyyy HH:mm')}"></td>
+            <td>
+                <a th:href="@{/files/{id}/download(id=${f.id})}">Preuzmi</a>
+                <form th:action="@{/files/{id}/delete(id=${f.id})}" method="post" class="inline">
+                    <button type="submit">Obriši</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <p th:if="${files.isEmpty()}">Košnica je prazna. Donesi prvi med!</p>
+</main>
+</body>
+</html>
