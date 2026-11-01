@@ -14,7 +14,6 @@ public class StoredFile {
     @Column(nullable = false)
     private String originalName;
 
-    // random name on disk, so users cannot overwrite each other's files
     @Column(nullable = false)
     private String storedName;
 
