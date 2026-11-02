@@ -32,6 +32,7 @@ public class UserService {
         user.setFullName(form.getFullName());
         user.setEmail(form.getEmail());
         user.setPasswordHash(passwordEncoder.encode(form.getPassword()));
+        user = userRepository.save(user);
         try {
             String customerId = stripeService.createCustomer(user.getEmail(),user.getFullName());
             user.setStripeCustomerId(customerId);
