@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Naplata')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<main class="container">
+    <h1>Naplata 💳</h1>
+
+    <div class="card">
+        <h3>Probni let (14 dana besplatno)</h3>
+        <p>Započni besplatni probni period od 14 dana i spremaj svoj med u košnicu.</p>
+
+        <form th:action="@{/billing/start-trial(_csrf=${_csrf.token})}" method="post">
+            <button type="submit">Počni probni let</button>
+        </form>
+    </div>
+
+    <div th:if="${param.success}" class="success card">
+        <p>Uspješno ste započeli probni let! Uskoro će vaš status biti ažuriran.</p>
+    </div>
+    <div th:if="${param.canceled}" class="error card">
+        <p>Prekinuli ste proces na Stripe Checkout-u.</p>
+    </div>
+</main>
+</body>
+</html>
