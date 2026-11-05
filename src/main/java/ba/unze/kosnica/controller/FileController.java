@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ba.unze.kosnica.service.BillingService;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -22,10 +23,12 @@ import java.security.Principal;
 public class FileController {
     private final FileService fileService;
     private final UserService userService;
+    private final BillingService billingService;
 
-    public FileController(FileService fileService, UserService userService) {
+    public FileController(FileService fileService, UserService userService, BillingService billingService) {
         this.fileService = fileService;
         this.userService = userService;
+        this.billingService = billingService;
     }
 
     @GetMapping
@@ -39,6 +42,13 @@ public class FileController {
     public String upload(@RequestParam("file") MultipartFile file,
                          Principal principal, RedirectAttributes redirect) {
         User user = userService.getByEmail(principal.getName());
+
+        if (!billingService.hasActiveAccess(user)) {
+            redirect.addFlashAttribute("error",
+                    "Za upload ti treba aktivan probni let ili pretplata. Pokreni ga na stranici Naplata.");
+            return "redirect:/files";
+        }
+
         try {
             fileService.store(file, user);
             redirect.addFlashAttribute("message", "Med je donesen u košnicu!");

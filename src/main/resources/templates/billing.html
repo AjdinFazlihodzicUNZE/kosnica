@@ -21,6 +21,12 @@
             <button type="submit">Počni probni let</button>
         </form>
     </div>
+
+
+    <div th:if="${status != null}" class="card">
+        <h3>Status pretplate</h3>
+        <p>Trenutni status: <strong th:text="${status}">-</strong></p>
+    </div>
 </main>
 </body>
 </html>
