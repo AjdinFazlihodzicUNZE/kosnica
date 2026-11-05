@@ -4,8 +4,23 @@
 <body>
 <nav th:replace="~{fragments :: navbar}"></nav>
 <main class="container">
-    <h1>Zdravo, <span th:text="${user.fullName}">pčelaru</span> 🐝</h1>
-    <p>Ovdje ćeš uskoro vidjeti stanje svoje košnice.</p>
+    <div class="card card-hero">
+        <h1>Zdravo, <span th:text="${user.fullName}">pčelaru</span> </h1>
+        <p>Dobro došli u svoj kontrolni centar Košnice.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+        <div class="card">
+            <h3>Moje ćelije 🍯</h3>
+            <p>Pregledaj, spremaj ili briši fajlove.</p>
+            <a th:href="@{/files}" class="btn">Otvorite ćelije</a>
+        </div>
+        <div class="card">
+            <h3>Pretplata 💳</h3>
+            <p>Upravljaj svojim probnim letom i pretplatom.</p>
+            <a th:href="@{/billing}" class="btn btn-secondary">Pregled naplate</a>
+        </div>
+    </div>
 </main>
 </body>
 </html>

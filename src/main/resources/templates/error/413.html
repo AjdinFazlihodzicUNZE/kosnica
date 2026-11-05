@@ -2,10 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments :: head('Fajl je prevelik')}"></head>
 <body>
+<nav th:replace="~{fragments :: navbar}"></nav>
 <main class="container">
-    <h1>Fajl je prevelik 🐝</h1>
-    <p class="error">Fajl je prevelik. Najviše možeš donijeti 10 MB odjednom.</p>
-    <p><a th:href="@{/files}">Nazad na Moje ćelije</a></p>
+    <div class="card error" style="margin-top: 40px;">
+        <h1>Fajl je prevelik 🐝</h1>
+        <p>Fajl koji pokušavaš poslati prelazi dozvoljenu granicu. Najviše možeš donijeti 10 MB odjednom.</p>
+        <a th:href="@{/files}" class="btn btn-secondary">Nazad na Moje ćelije</a>
+    </div>
 </main>
 </body>
 </html>
