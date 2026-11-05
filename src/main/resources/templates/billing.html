@@ -6,6 +6,7 @@
 <main class="container">
     <h1>Naplata 💳</h1>
 
+
     <div th:if="${param.success}" class="success">
         <p>Uspješno ste započeli probni let! Uskoro će vaš status biti ažuriran.</p>
     </div>
@@ -13,7 +14,8 @@
         <p>Prekinuli ste proces na Stripe Checkout-u.</p>
     </div>
 
-    <div class="card card-hero">
+
+    <div class="card card-hero" th:if="${subscription == null}">
         <h3>Probni let (14 dana besplatno) 🐝</h3>
         <p>Započni besplatni probni period od 14 dana i spremaj svoj med u košnicu bez ograničenja.</p>
 
@@ -23,9 +25,26 @@
     </div>
 
 
-    <div th:if="${status != null}" class="card">
-        <h3>Status pretplate</h3>
-        <p>Trenutni status: <strong th:text="${status}">-</strong></p>
+    <div class="card" th:if="${subscription != null}" th:switch="${subscription.status}">
+        <p th:case="'trialing'">Status: <b>Probni let 🐝</b>. Preostalo dana: <b th:text="${daysLeft}">14</b>.<br>
+            Probni let ističe: <span th:text="${#temporals.format(subscription.trialEnd, 'dd.MM.yyyy')}"></span>.</p>
+
+        <p th:case="'active'">Status: <b>Aktivna pretplata 💳</b>.<br>
+            Trenutni period traje do: <span th:text="${#temporals.format(subscription.currentPeriodEnd, 'dd.MM.yyyy')}"></span>.</p>
+
+        <p th:case="'past_due'">Status: <b>Plaćanje kasni ⚠️</b>. Upload je zaustavljen dok se ne plati.</p>
+
+        <p th:case="'canceled'">Status: <b>Pretplata je otkazana ❌git add src/main/resources/templates/billing.html</b>.</p>
+
+        <p th:case="*">Status: <b th:text="${subscription.status}">nepoznat</b></p>
+    </div>
+
+
+    <div th:if="${hasAccess}" class="success">
+        Upload je omogućen.
+    </div>
+    <div th:unless="${hasAccess}" class="error">
+        Upload je trenutno zaustavljen.
     </div>
 </main>
 </body>
