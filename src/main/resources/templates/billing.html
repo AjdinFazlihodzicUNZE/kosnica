@@ -34,7 +34,7 @@
 
         <p th:case="'past_due'">Status: <b>Plaćanje kasni ⚠️</b>. Upload je zaustavljen dok se ne plati.</p>
 
-        <p th:case="'canceled'">Status: <b>Pretplata je otkazana ❌git add src/main/resources/templates/billing.html</b>.</p>
+        <p th:case="'canceled'">Status: <b>Pretplata je otkazana ❌</b>.</p>
 
         <p th:case="*">Status: <b th:text="${subscription.status}">nepoznat</b></p>
     </div>
