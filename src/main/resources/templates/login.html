@@ -4,18 +4,22 @@
 <body>
 <nav th:replace="~{fragments :: navbar}"></nav>
 <main class="container">
-    <h1>Prijava</h1>
-    <form th:action="@{/login}" method="post" class="card">
-        <div class="error" th:if="${param.error}">Pogrešan email ili lozinka</div>
-        <div class="success" th:if="${param.registered}">Registracija uspješna, prijavi se</div>
-        <label>Email</label><br>
-        <input type="text" name="email">
-        <br>
-        <label>Lozinka</label><br>
-        <input type="password" name="password">
-        <br>
-        <button type="submit">Prijavi se</button>
-    </form>
+    <div class="card" style="max-width: 480px; margin: 0 auto;">
+        <h1>Prijava 🔑</h1>
+
+        <div class="error" th:if="${param.error}">Pogrešan email ili lozinka.</div>
+        <div class="success" th:if="${param.registered}">Registracija uspješna, prijavi se!</div>
+
+        <form th:action="@{/login}" method="post">
+            <label for="email">Email adresa</label>
+            <input type="text" id="email" name="email" required placeholder="pcelar@example.com">
+
+            <label for="password">Lozinka</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" style="width: 100%;">Prijavi se</button>
+        </form>
+    </div>
 </main>
 </body>
 </html>

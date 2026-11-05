@@ -4,23 +4,27 @@
 <body>
 <nav th:replace="~{fragments :: navbar}"></nav>
 <main class="container">
-    <h1>Postani pčelar 🐝</h1>
-    <form th:action="@{/register}" th:object="${form}" method="post" class="card">
-        <label>Ime i prezime</label><br>
-        <input type="text" th:field="*{fullName}">
-        <div class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
-        <br>
-        <label>Email</label><br>
-        <input type="text" th:field="*{email}">
-        <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
-        <br>
-        <label>Lozinka</label><br>
-        <input type="password" th:field="*{password}">
-        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <div class="card" style="max-width: 480px; margin: 0 auto;">
+        <h1>Postani pčelar 🐝</h1>
+
         <div class="error" th:if="${error}" th:text="${error}"></div>
-        <br>
-        <button type="submit">Registruj se</button>
-    </form>
+
+        <form th:action="@{/register}" th:object="${form}" method="post">
+            <label for="fullName">Ime i prezime</label>
+            <input type="text" id="fullName" th:field="*{fullName}" placeholder="Meho Mehić">
+            <div class="error-text" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+
+            <label for="email">Email adresa</label>
+            <input type="text" id="email" th:field="*{email}" placeholder="pcelar@example.com">
+            <div class="error-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+            <label for="password">Lozinka</label>
+            <input type="password" id="password" th:field="*{password}">
+            <div class="error-text" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+            <button type="submit" style="width: 100%;">Registruj se</button>
+        </form>
+    </div>
 </main>
 </body>
 </html>

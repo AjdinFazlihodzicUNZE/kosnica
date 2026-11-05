@@ -4,8 +4,17 @@
 <body>
 <nav th:replace="~{fragments :: navbar}"></nav>
 <main class="container">
-    <h1>Dobro došli u Košnicu 🍯</h1>
-    <p>Čuvaj svoj med na sigurnom. Prvih 14 dana je probni let.</p>
+    <div class="card card-hero">
+        <h1>Dobro došli u Košnicu </h1>
+        <p>Čuvaj svoj med na sigurnom. Registruj se i započni 14 dana besplatnog probnog leta sa neograničenim prostorom za tvoje fajlove.</p>
+        <div th:unless="${loggedIn}">
+            <a th:href="@{/register}" class="btn">Postani pčelar</a>
+            <a th:href="@{/login}" class="btn btn-secondary">Prijava</a>
+        </div>
+        <div th:if="${loggedIn}">
+            <a th:href="@{/files}" class="btn">Moje ćelije 🍯</a>
+        </div>
+    </div>
 </main>
 </body>
 </html>
