@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Potrošnja')}"></head>
+<body>
+<nav th:replace="~{fragments :: navbar}"></nav>
+<main class="container">
+    <h1>Potrošnja 🍯</h1>
+
+    <div class="card">
+        <p>Ukupno donesenog meda: <b th:text="${totalMb} + ' MB'">0 MB</b></p>
+        <p>Procijenjeni iznos: <b th:text="${#numbers.formatDecimal(estimatedPrice, 1, 2)} + ' EUR'">0.00 EUR</b>
+            (za vrijeme probnog leta se ne naplaćuje)</p>
+    </div>
+
+    <table th:if="${!records.isEmpty()}">
+        <tr><th>Datum</th><th>Fajl</th><th>MB</th><th>Poslano Stripeu</th></tr>
+        <tr th:each="r : ${records}">
+            <td th:text="${#temporals.format(r.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
+            <td th:text="${r.fileName}"></td>
+            <td th:text="${r.megabytes}"></td>
+            <td th:text="${r.reportedToStripe} ? 'da' : 'ne'"></td>
+        </tr>
+    </table>
+    <p th:if="${records.isEmpty()}">Još nema potrošnje.</p>
+</main>
+</body>
+</html>

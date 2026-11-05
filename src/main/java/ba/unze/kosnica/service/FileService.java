@@ -19,10 +19,13 @@ import java.util.UUID;
 public class FileService {
     private final StoredFileRepository fileRepository;
     private final Path uploadPath;
+    private final UsageService usageService;
 
     public FileService(StoredFileRepository fileRepository,
+                       UsageService usageService,
                        @Value("${kosnica.upload-dir}") String uploadDir) throws IOException {
         this.fileRepository = fileRepository;
+        this.usageService = usageService;
         this.uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
         Files.createDirectories(this.uploadPath);
     }
@@ -40,7 +43,9 @@ public class FileService {
         storedFile.setStoredName(storedName);
         storedFile.setContentType(file.getContentType());
         storedFile.setSizeBytes(file.getSize());
-        return fileRepository.save(storedFile);
+        StoredFile saved = fileRepository.save(storedFile);
+        usageService.record(owner, saved.getOriginalName(), saved.getSizeBytes());
+        return saved;
     }
 
     public List<StoredFile> listFor(User owner) {
