@@ -11,8 +11,15 @@ public class StripeConfig {
     @Value("${stripe.secret-key:}")
     private String secretKey;
 
+    @Value("${stripe.webhook-secret:}")
+    private String webhookSecret;
+
     @PostConstruct
     public void init() {
         Stripe.apiKey = secretKey;
+    }
+
+    public String getWebhookSecret() {
+        return webhookSecret;
     }
 }
