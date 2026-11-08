@@ -52,4 +52,20 @@ public class StripeService {
             throw new IllegalStateException("Stripe Checkout greška: " + e.getMessage(), e);
         }
     }
+
+    public String createPortalSession(String customerId, String returnUrl) {
+        try {
+            com.stripe.param.billingportal.SessionCreateParams params =
+                    com.stripe.param.billingportal.SessionCreateParams.builder()
+                            .setCustomer(customerId)
+                            .setReturnUrl(returnUrl)
+                            .build();
+            com.stripe.model.billingportal.Session session =
+                    com.stripe.model.billingportal.Session.create(params);
+            return session.getUrl();
+        } catch (StripeException e) {
+            throw new IllegalStateException("Stripe Portal greška: " + e.getMessage(), e);
+        }
+    }
+
 }

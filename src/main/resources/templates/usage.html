@@ -5,7 +5,9 @@
 <nav th:replace="~{fragments :: navbar}"></nav>
 <main class="container">
     <h1>Potrošnja 🍯</h1>
-
+    <div class="error" th:if="${param.noCustomer}">
+        Tvoj račun još nije povezan sa Stripeom, pa portal nije dostupan.
+    </div>
     <div class="card">
         <p>Ukupno donesenog meda: <b th:text="${totalMb} + ' MB'">0 MB</b></p>
         <p>Procijenjeni iznos: <b th:text="${#numbers.formatDecimal(estimatedPrice, 1, 2)} + ' EUR'">0.00 EUR</b>
@@ -22,6 +24,9 @@
         </tr>
     </table>
     <p th:if="${records.isEmpty()}">Još nema potrošnje.</p>
+    <form th:action="@{/usage/portal}" method="post">
+        <button type="submit">Upravljaj pretplatom</button>
+    </form>
 </main>
 </body>
 </html>
